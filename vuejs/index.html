@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Class-less preview • Pico CSS</title>
+    <meta
+      name="description"
+      content="A class-less example using Pico.css and Vue.js."
+    />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.classless.min.css"
+    />
+    <style>
+      :root {
+        --pico-font-size: 87.5%;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      h3 {
+        font-size: 1.25rem;
+      }
+      h4 {
+        font-size: 1.1rem;
+      }
+      h5 {
+        font-size: 1rem;
+      }
+      h6 {
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>Theme Switcher with Vue.js</h1>
+      <p>
+        This is a class-less example using Pico.css and Vue.js to switch themes.
+      </p>
+
+      <nav>
+        <ul>
+          <li><a href="#" data-theme-switcher="light">Light Theme</a></li>
+          <li><a href="#" data-theme-switcher="dark">Dark Theme</a></li>
+          <li><a href="#" data-theme-switcher="auto">Auto Theme</a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <!-- Vue 3 (prod) via CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- Theme switcher using Vue.js -->
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        methods: {
+          switchTheme(theme) {
+            if (theme === "auto") {
+              document.documentElement.removeAttribute("data-theme");
+            } else {
+              document.documentElement.setAttribute("data-theme", theme);
+            }
+          },
+        },
+        mounted() {
+          document.querySelectorAll("[data-theme-switcher]").forEach((el) => {
+            el.addEventListener("click", (e) => {
+              e.preventDefault();
+              this.switchTheme(el.getAttribute("data-theme-switcher"));
+            });
+          });
+        },
+      }).mount("body");
+    </script>
+  </body>
+</html>

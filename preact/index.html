@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Class-less preview • Pico CSS</title>
+    <meta
+      name="description"
+      content="A class-less example using Pico.css and Preact."
+    />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.classless.min.css"
+    />
+    <style>
+      :root {
+        --pico-font-size: 87.5%;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      h3 {
+        font-size: 1.25rem;
+      }
+      h4 {
+        font-size: 1.1rem;
+      }
+      h5 {
+        font-size: 1rem;
+      }
+      h6 {
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="app">
+      <h1>Theme Switcher with Preact</h1>
+      <p>
+        This is a class-less example using Pico.css and Preact to switch themes.
+      </p>
+
+      <nav>
+        <ul>
+          <li><a href="#" data-theme-switcher="light">Light Theme</a></li>
+          <li><a href="#" data-theme-switcher="dark">Dark Theme</a></li>
+          <li><a href="#" data-theme-switcher="auto">Auto Theme</a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <!-- Preact (prod) via CDN -->
+    <script src="https://unpkg.com/preact@10.27.2/dist/preact.umd.js"></script>
+
+    <!-- Theme switcher using Preact.js -->
+    <script>
+      const { h, render, Component } = preact;
+      class ThemeSwitcher extends Component {
+        componentDidMount() {
+          document.querySelectorAll("[data-theme-switcher]").forEach((el) => {
+            el.addEventListener("click", (e) => {
+              e.preventDefault();
+              this.switchTheme(el.getAttribute("data-theme-switcher"));
+            });
+          });
+        }
+        switchTheme(theme) {
+          if (theme === "auto") {
+            document.documentElement.removeAttribute("data-theme");
+          } else {
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        }
+        render() {
+          return null;
+        }
+      }
+      render(h(ThemeSwitcher, {}), document.body);
+    </script>
+  </body>
+</html>
